@@ -1,0 +1,14 @@
+:root {
+  --violet: #b611b6;
+  --dark-violet: #503181;
+  --dark: #372e37;
+  --white: #ffffff;
+  --vwhite: #f4f4f4;
+  --blue: #3b3867;
+  --pink: #f299f2;
+  --silver: #e1e2e4;
+  --header-text-var: #503181;
+}
+body {
+  color: var(--dark);
+}
