@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
 import VInput from './controls/VInput.vue'
+import VRadioElement from './controls/VRadioElement.vue'
 import { calcData } from '/src/composables/calcData.ts'
 
 let someVal = ref(undefined)
@@ -52,7 +53,7 @@ let itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
       <div class="vcalc__calculating-part">
         <div class="vcalc__section">
             <div class="switch-row">
-
+                <VRadioElement v-for="(item, index) in generalData" :id="`select_${index}`" :attrName="`select_${index}`" :displayName="item.name"></VRadioElement>
             </div> 
         </div>
         <div class="vcalc__section">

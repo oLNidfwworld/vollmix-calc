@@ -7,7 +7,7 @@ interface IProps{
 const props = defineProps<IProps>();
 </script>
 <template>
-  <input type="radio" :name="attrName" :id="id" value="Стяжка пола" />
+  <input type="radio" :name="attrName" :id="id" :value="displayName" />
   <label :for="id" class="switch-element">
     <div class="switch-element__wrapper">
       <i>
@@ -25,7 +25,7 @@ const props = defineProps<IProps>();
         </svg>
       </i>
       <div class="switch-element__inner">
-        <span class="switch-element__inner-main-text">Стяжка пола</span>
+        <span class="switch-element__inner-main-text">{{displayName}}</span>
       </div>
     </div>
   </label>
