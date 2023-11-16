@@ -1,13 +1,18 @@
-<script setup>
+<script lang="ts" setup>
 interface IProps{
     attrName : string,
     id : string,
     displayName : string,
+    active : boolean,
 }
+defineOptions({
+  inheritAttrs: false
+});
+
 const props = defineProps<IProps>();
 </script>
 <template>
-  <input type="radio" :name="attrName" :id="id" :value="displayName" />
+  <input :checked="active"  type="radio" :name="attrName" :id="id" :value="displayName" />
   <label :for="id" class="switch-element">
     <div class="switch-element__wrapper">
       <i>

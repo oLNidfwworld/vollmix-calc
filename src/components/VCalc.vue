@@ -1,15 +1,17 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import VInput from './controls/VInput.vue'
+import VCheckbox from './controls/VCheckbox.vue'
 import VRadioElement from './controls/VRadioElement.vue'
 import { calcData } from '/src/composables/calcData.ts'
 
-let someVal = ref(undefined)
 const generalData = calcData()
-console.log(generalData)
-let itog = ref(2300000)
-let itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
-// let compVal = computed(() => someVal.value * 10);
+const currentData = reactive(generalData.find((x) => x.active.value === true))
+
+ 
+const itog = computed(() => currentData.itog()) 
+const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
+
 </script>
 <template>
   <div class="vcalc">
@@ -52,25 +54,26 @@ let itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
       </svg>
       <div class="vcalc__calculating-part">
         <div class="vcalc__section">
-            <div class="switch-row">
-                <VRadioElement v-for="(item, index) in generalData" :id="`select_${index}`" :attrName="`select_${index}`" :displayName="item.name"></VRadioElement>
-            </div> 
+          <div class="switch-row">
+            <VRadioElement
+              v-for="(item, index) in generalData" :key="index"
+              :id="`select_${index}`"
+              :active="item.active.value"
+              :attrName="`lolkek`"
+              :displayName="item.name"
+            ></VRadioElement>
+          </div>
         </div>
-        <div class="vcalc__section">
+        <div v-if="currentData.generalParams" class="vcalc__section">
           <div class="vcalc__subtitle">Основные параметры</div>
           <div class="vcalc__inpt-grid">
             <VInput
-              v-model="someVal"
+              v-for="(item, index) in currentData.generalParams" :key="index"
+              v-model="item.inputValue"
               required
               type="number"
               placeholder=" "
-              :labelPlaceholder="'Площадь помещения'"
-            ></VInput>
-            <VInput
-              required
-              type="number"
-              placeholder=" "
-              :labelPlaceholder="'Толщина слоя'"
+              :labelPlaceholder="item.name" 
             ></VInput>
           </div>
           <p class="text-pink text-[24px] font-[500]">
@@ -79,31 +82,23 @@ let itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
         </div>
         <div class="vcalc__section">
           <div class="vcalc__subtitle">Коммуникации</div>
-          <div class="vcalc__inpt-grid">
-            <VInput
-              v-model="someVal"
-              required
-              type="number"
-              placeholder=" "
-              :labelPlaceholder="'Площадь помещения'"
-            ></VInput>
-            <VInput
-              required
-              type="number"
-              placeholder=" "
-              :labelPlaceholder="'Толщина слоя'"
-            ></VInput>
+          <div class="vcalc__inpt-grid"> 
+            <VCheckbox v-for="(item, index) in currentData.communications" v-model="item.value" :key="index" :id="`communications_${item.code}`" :attrName="item.code" :displayName="item.name"></VCheckbox>
           </div>
         </div>
         <div class="vcalc__section">
           <div class="vcalc__subtitle">Дополнительно</div>
-          <div class="vcalc__inpt-grid"></div>
+          <div class="vcalc__inpt-grid">
+            <VCheckbox v-for="(item, index) in currentData.additionals"   v-model="item.value"  :key="index" :id="`additional_${item.code}`" :attrName="item.code" :displayName="item.name"></VCheckbox>
+          </div>
         </div>
       </div>
       <div class="vcalc__result">
-        <span class="text-violet text-[40px] font-semibold"
-          >Результат : <span class="text-white">{{ itogFormated }} ₽</span></span
-        >
+        <span class="text-violet text-[40px] font-semibold">
+          Результат : <span class="text-white">
+            <span v-if="itog"> {{ itogFormated }} </span>
+            <span v-else> 0 </span> ₽</span>
+        </span>
       </div>
     </div>
   </div>
