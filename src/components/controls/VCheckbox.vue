@@ -4,13 +4,12 @@ interface IProps{
     attrName : string,
     id : string,
     displayName : string,
-    modelValue : Any,
+    modelValue : unknown,
 } 
 interface IEmits{
-    'update:modelValue' : [val: Any]  
+    'update:modelValue' : [val: unknown]  
 }
-
-console.log(useAttrs());
+ 
 defineOptions({
   inheritAttrs: false
 })

@@ -6,12 +6,11 @@ import VRadioElement from './controls/VRadioElement.vue'
 import { calcData } from '/src/composables/calcData.ts'
 
 const generalData = calcData()
-const currentData = reactive(generalData.find((x) => x.active.value === true))
+const currentData = reactive(generalData.find((x : any) => x.active.value === true)) 
 
- 
 const itog = computed(() => currentData.itog()) 
 const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
-
+ 
 </script>
 <template>
   <div class="vcalc">
@@ -74,6 +73,7 @@ const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
               type="number"
               placeholder=" "
               :labelPlaceholder="item.name" 
+              :err="item.errorTrace"
             ></VInput>
           </div>
           <p class="text-pink text-[24px] font-[500]">

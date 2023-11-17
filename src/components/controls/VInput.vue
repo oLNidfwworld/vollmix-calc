@@ -1,11 +1,15 @@
-<script lang="ts" setup> 
+<script lang="ts" setup>
+import { computed } from '@vue/reactivity';
+
+ 
 
 interface IProps{
     labelPlaceholder?: string,
-    modelValue? : Any
+    modelValue? : unknown,
+    err? : unknown
 }
 interface IEmits{
-    'update:modelValue' : [val: Any] 
+    'update:modelValue' : [val: unknown] 
 }
 
 defineOptions({
@@ -13,12 +17,13 @@ defineOptions({
 })
 
 const props = defineProps<IProps>();   
-const emits = defineEmits<IEmits>();
+const emits = defineEmits<IEmits>(); 
+
 
 </script>
 <template>
   <div class="inpt__wrapper">
     <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" v-bind="$attrs" class="inpt" />
-    <label class="inpt__placeholder">{{ labelPlaceholder }}</label>
+    <label class="inpt__placeholder">{{ labelPlaceholder }}</label> 
   </div>
 </template>
