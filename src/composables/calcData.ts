@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, watch } from 'vue'
 
 export const calcData = () => {
   return [
@@ -9,36 +9,17 @@ export const calcData = () => {
         square: {
           code: 'square',
           name: 'Площадь помещения',
-          inputValue: 49,
-
-          
-        //   errorTrace :  function ( checkSum ) {
-            
-        //     if( checkSum < 50 ){
-        //         return ('Толщина слоя не может быть меньше ' + this.min);
-        //     }
-        //     if( checkSum > this.max){
-        //         return ('Толщина слоя не может быть больше ' + this.max);
-        //     }
-        //     return null;
-        //   }  
+          inputValue: 49, 
+          min : 50,
+          errorMessage : '',
         },
         layerHeight: {
           code: 'layerHeight',
           name: 'Толщина слоя',
           inputValue: 4,
           min: 4,
-          max: 15, 
-        //   errorTrace : function(){ 
-        //     console.log(this.inputValue)
-        //     if( this.inputValue < 50 ){
-        //         return ('Толщина слоя не может быть меньше ' + this.min);
-        //     }
-        //     if( this.inputValue > this.max){
-        //         return ('Толщина слоя не может быть больше ' + this.max);
-        //     }
-        //     return null;
-        //   }  
+          max: 15,
+          errorMessage : '',
         }
       },
       communications: {
@@ -79,15 +60,7 @@ export const calcData = () => {
         let checboxesSum = 0
         let mainSum = 0
 
-        let layerKoef = 0
-        if (
-          this.generalParams.layerHeight.inputValue >= 4 &&
-          this.generalParams.layerHeight.inputValue <= 15
-        ) {
-          layerKoef = (this.generalParams.layerHeight.inputValue - 4) * 80
-        } else {
-          console.warn('Толщина слоя должна быть от 4 до 15 мм')
-        }
+        let layerKoef = 0 
 
         let pricePerSquare = 880;
         pricePerSquare += layerKoef; 
@@ -153,6 +126,22 @@ export const calcData = () => {
         })
 
         return mainSum + checboxesSum
+      },
+      runWatchers : function () {
+        watch( () => this.generalParams.square.inputValue, (newVal) => { 
+          if( newVal < this.generalParams.square.min ){
+              this.generalParams.square.errorMessage = 'Значение не должно быть меньше 50';
+          }else{ 
+            this.generalParams.square.errorMessage = '';
+          }
+        })
+        watch( () => this.generalParams.layerHeight.inputValue, (newVal) => {
+          if( newVal > this.generalParams.layerHeight.max || newVal <  this.generalParams.layerHeight.min  ) {
+            this.generalParams.layerHeight.errorMessage = 'Значение должно быть в пределах от 4 до 15'
+          } else {
+            this.generalParams.layerHeight.errorMessage = '';
+          }
+        })
       },
       active: ref(true)
     }

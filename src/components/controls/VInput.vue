@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
 
  
 
@@ -22,8 +21,9 @@ const emits = defineEmits<IEmits>();
 
 </script>
 <template>
-  <div class="inpt__wrapper">
+  <div :class="{'inpt__has-error' : err}" class="inpt__wrapper">
     <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" v-bind="$attrs" class="inpt" />
     <label class="inpt__placeholder">{{ labelPlaceholder }}</label> 
+    <label class="inpt__placeholder-error inpt__placeholder" v-if="err"> {{ err }} </label>
   </div>
 </template>

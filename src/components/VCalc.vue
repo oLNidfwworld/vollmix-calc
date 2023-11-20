@@ -8,9 +8,17 @@ import { calcData } from '/src/composables/calcData.ts'
 const generalData = calcData()
 const currentData = reactive(generalData.find((x : any) => x.active.value === true)) 
 
-const itog = computed(() => currentData.itog()) 
+const itog = computed(() => currentData.itog());
+currentData.runWatchers();
+
 const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
- 
+
+// const errorWatcher = watch(() => currentData.generalParams.layerHeight.inputValue, (newVal) => {
+//   console.log(newVal);
+// });
+
+// currentData.generalParams.layerHeight.log()
+
 </script>
 <template>
   <div class="vcalc">
@@ -73,11 +81,12 @@ const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
               type="number"
               placeholder=" "
               :labelPlaceholder="item.name" 
-              :err="item.errorTrace"
+              :err="item.errorMessage"
             ></VInput>
           </div>
           <p class="text-pink text-[24px] font-[500]">
             Минимальная толщина стяжки – 4см, максимальная – 15см
+            Площадь помещения - от 50м<sup>2</sup>
           </p>
         </div>
         <div class="vcalc__section">
