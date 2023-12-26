@@ -9,14 +9,14 @@ export const calcData = () => {
         square: {
           code: 'square',
           name: 'Площадь помещения',
-          inputValue: 49, 
+          inputValue: 0, 
           min : 50,
           errorMessage : '',
         },
         layerHeight: {
           code: 'layerHeight',
           name: 'Толщина слоя',
-          inputValue: 4,
+          inputValue: 0,
           min: 4,
           max: 15,
           errorMessage : '',
@@ -64,6 +64,9 @@ export const calcData = () => {
 
         let pricePerSquare = 880;
         pricePerSquare += layerKoef; 
+        if ( this.generalParams.layerHeight.inputValue < this.generalParams.layerHeight.min || this.generalParams.layerHeight.inputValue > this.generalParams.layerHeight.max ) {
+          return `Толщина слоя должна быть в пределах от ${this.generalParams.layerHeight.min} до ${this.generalParams.layerHeight.max}`
+        }
         if (
           this.generalParams.square.inputValue < 60 &&
           this.generalParams.square.inputValue >= 50
@@ -116,7 +119,7 @@ export const calcData = () => {
           pricePerSquare += 40;   
           mainSum = pricePerSquare * this.generalParams.square.inputValue;
         } else {
-            console.warn('Площадь помещения должна быть от 50m2')
+          return  'Площадь помещения должна быть от 50m2'
         }
 
         Object.values({ ...this.additionals, ...this.communications }).map((obj) => {

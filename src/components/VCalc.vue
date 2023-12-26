@@ -1,14 +1,21 @@
 <script lang="ts" setup>
-import { ref, reactive, computed, watch } from 'vue'
-import VInput from './controls/VInput.vue'
-import VCheckbox from './controls/VCheckbox.vue'
-import VRadioElement from './controls/VRadioElement.vue'
-import { calcData } from '/src/composables/calcData.ts'
+import { ref, reactive, computed, watch } from 'vue';
+import VInput from './controls/VInput.vue';
+import VCheckbox from './controls/VCheckbox.vue';
+import VRadioElement from './controls/VRadioElement.vue';
+import { calcData } from '/src/composables/calcData.ts';
+import MainForm from '/src/components/forms/MainForm.vue';
 
 const generalData = calcData()
 const currentData = reactive(generalData.find((x : any) => x.active.value === true)) 
 
-const itog = computed(() => currentData.itog());
+const itog = computed(() => {
+  if( isNaN(parseInt(currentData.itog())) ) {
+    return false;
+  } else {
+    return currentData.itog();
+  }
+});
 currentData.runWatchers();
 
 const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
@@ -109,7 +116,9 @@ const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
             <span v-else> 0 </span> ₽</span>
         </span>
       </div>
+      <MainForm></MainForm>
     </div>
+
   </div>
 </template>
 <style lang="scss">

@@ -34,6 +34,6 @@ const emits = defineEmits<IEmits>();
         </div>
       </div>
     </label>
-    <p class="text-white text-[20px] font-semibold ml-5">{{ displayName }}</p>
+    <p class="text-white text-[20px] font-semibold ml-5" v-html="displayName"> </p>
   </div>
 </template>
