@@ -5,6 +5,7 @@ interface IProps{
     id : string,
     displayName : string,
     modelValue : unknown,
+    isWarn?: Boolean
 } 
 interface IEmits{
     'update:modelValue' : [val: unknown]  
@@ -29,7 +30,7 @@ const emits = defineEmits<IEmits>();
     />
     <label :for="id" class="toggler__label">
       <div class="toggler">
-        <div class="toggler__wrapper">
+        <div class="toggler__wrapper" :class="{ 'toggler-warn' : isWarn }">
           <div class="toggler__switch"></div>
         </div>
       </div>
