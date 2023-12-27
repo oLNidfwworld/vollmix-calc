@@ -1,9 +1,7 @@
-<script lang="ts" setup> 
-import { useAttrs } from 'vue';
+<script lang="ts" setup>  
 interface IProps{
     attrName : string,
-    id : string,
-    displayName : string,
+    id : string, 
     modelValue : unknown,
     isWarn?: Boolean
 } 
@@ -35,6 +33,8 @@ const emits = defineEmits<IEmits>();
         </div>
       </div>
     </label>
-    <p class="text-white text-[20px] font-semibold ml-5" v-html="displayName"> </p>
+    <p class="text-white text-[20px] font-semibold ml-5" >
+      <slot></slot>  
+    </p>
   </div>
 </template>

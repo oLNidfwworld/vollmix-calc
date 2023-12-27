@@ -8,6 +8,7 @@ import MainForm from '/src/components/forms/MainForm.vue';
 
 const generalData = calcData()
 const currentData = reactive(generalData.find((x : any) => x.active.value === true)) 
+currentData.runWatchers();
 
 const itog = computed(() => {
   if( isNaN(parseInt(currentData.itog())) ) {
@@ -16,10 +17,22 @@ const itog = computed(() => {
     return currentData.itog();
   }
 });
-currentData.runWatchers();
 
 const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
 
+const dataToSend = computed(( ) => {
+
+  let dataTmp = {
+    name : currentData.name, 
+    ...{ ...currentData.additionals, ...currentData.generalParams, ...currentData.communications }
+  } 
+  
+  for(const [key, dataTmpValue] of Object.entries(dataTmp) ) {
+    if(key === 'name') continue;
+    dataTmp[key] = (dataTmpValue.value !== undefined)?dataTmpValue.value:dataTmpValue.inputValue
+  } 
+  return dataTmp;
+} ) 
 // const errorWatcher = watch(() => currentData.generalParams.layerHeight.inputValue, (newVal) => {
 //   console.log(newVal);
 // });
@@ -27,7 +40,7 @@ const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
 // currentData.generalParams.layerHeight.log()
 
 </script>
-<template>
+<template> 
   <div class="vcalc">
     <div class="vcalc__wrapper">
       <svg
@@ -99,13 +112,17 @@ const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
         <div class="vcalc__section">
           <div class="vcalc__subtitle">Коммуникации</div>
           <div class="vcalc__inpt-grid"> 
-            <VCheckbox v-for="(item, index) in currentData.communications" v-model="item.value" :key="index" :id="`communications_${item.code}`" :attrName="item.code" :displayName="item.name"></VCheckbox>
+            <VCheckbox v-for="(item, index) in currentData.communications" v-model="item.value" :key="index" :id="`communications_${item.code}`" :attrName="item.code" >
+              {{ item.name }}
+            </VCheckbox>
           </div>
         </div>
         <div class="vcalc__section">
           <div class="vcalc__subtitle">Дополнительно</div>
           <div class="vcalc__inpt-grid">
-            <VCheckbox v-for="(item, index) in currentData.additionals"   v-model="item.value"  :key="index" :id="`additional_${item.code}`" :attrName="item.code" :displayName="item.name"></VCheckbox>
+            <VCheckbox v-for="(item, index) in currentData.additionals"   v-model="item.value"  :key="index" :id="`additional_${item.code}`" :attrName="item.code"  >
+              {{  item.name  }}
+            </VCheckbox>
           </div>
         </div>
       </div>
@@ -116,7 +133,7 @@ const itogFormated = computed(() => itog.value.toLocaleString('ru-RU'))
             <span v-else> 0 </span> ₽</span>
         </span>
       </div>
-      <MainForm></MainForm>
+      <MainForm :otherData="dataToSend"></MainForm>
     </div>
 
   </div>
