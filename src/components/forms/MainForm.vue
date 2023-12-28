@@ -120,7 +120,7 @@ onMounted(( ) => {
 </script>
 <template>
   <div class="my-[100px]"> 
-    <h2 class="mb-5  md:mb-10  section-title-style text-white">Заказать стяжку пола</h2>
+    <h2 class="mb-5  md:mb-10  vcalc__subtitle text-white">Заказать стяжку пола</h2>
     <form @submit.prevent="sendThisFuck">
       <div
         class="grid max-w-[722px] xl:max-w-[unset] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:gap-5 gap-[18px] mb-5"

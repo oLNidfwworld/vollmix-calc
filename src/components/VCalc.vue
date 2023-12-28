@@ -147,6 +147,18 @@ const dataToSend = computed(( ) => {
         linear-gradient(0deg, rgba(52, 24, 94, 0.79) 0%, rgba(52, 24, 94, 0.79) 100%),
         url(https://vollmix.group/upload/assets/popup-form-mask.bec97c.jpeg),
         lightgray 50% / cover no-repeat;
+      @media (max-width: 1279px) {
+        padding: 60px;
+      }
+      @media (max-width: 719px) {
+        padding: 30px;
+      }
+      @media (max-width: 479px) {
+        padding: 20px;
+      }
+      @media (max-width: 329px) {
+        padding: 15px;
+      }
     }
     &subtitle {
       @apply leading-[110%];
@@ -154,9 +166,22 @@ const dataToSend = computed(( ) => {
       font-weight: 600;
       color: var(--white);
       letter-spacing: 1.2px;
+      
+      @media (max-width: 719px) {
+        font-size: 30px;
+      } 
+      @media (max-width: 479px) {
+        font-size: 20px;
+      } 
     }
     &calculating-part {
       @apply max-w-[843px];
+
+      .text-pink.text-\[24px\] {
+        @media (max-width: 479px) {
+          font-size: 18px;
+        }
+      }
     }
     &section {
       @apply mb-10;
@@ -171,6 +196,16 @@ const dataToSend = computed(( ) => {
     }
     &inpt-grid {
       @apply grid grid-cols-2 gap-4;
+      @media (max-width: 1023px) {
+        @apply grid-cols-1;
+      }
+    }
+    &result {
+      .text-violet.text-\[40px\] {
+        @media (max-width: 1023px) {
+          font-size: 30px;
+        }
+      }
     }
   }
   .inpt {
