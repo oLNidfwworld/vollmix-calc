@@ -23,9 +23,9 @@ const errMsg = ref(false);
 const isWarn = ref(false);
 const userData : Ref<IUserData> = ref({
   action : 'SEND_FROM_CALC',
-  name : '500',
-  email : '500',
-  phone : '500',
+  name : '',
+  email : '',
+  phone : '',
 });  
 
 const jsSuccessTemplate = () => {
