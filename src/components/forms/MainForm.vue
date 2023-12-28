@@ -17,7 +17,7 @@ import process from 'process';
 
 const props = defineProps<IProps>();
 
-const confirm = ref(false);
+const confirm = ref(true);
 const errMsg = ref(false);
 
 const isWarn = ref(false);
