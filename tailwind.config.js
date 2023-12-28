@@ -86,7 +86,7 @@ export default {
           }
         },
         '.section-title-style': {
-          fontSize: '30px',
+          fontSize: '20px',
           lineHeight: '110%',
           letterSpacing: '0.6px',
           fontWeight: '600',
@@ -94,7 +94,7 @@ export default {
           color: 'var(--dark-violet)',
           textWrap: 'balance',
           '@screen xs': {
-            fontSize: '30px',
+            fontSize: '20px',
             letterSpacing: '1.05px'
           },
           '@screen sm': {
